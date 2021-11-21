@@ -44,6 +44,19 @@ class BirdsController < ApplicationController
     end
   end
 
+  def destroy 
+    # find the bird
+    bird = Bird.find_by(id: params[:id])
+    # if the record exists, destroy it and send a 204 status code. if not, render a 404 error.
+    if bird 
+      bird.destroy 
+      # head :no_content 
+      render json: {}
+    else 
+      render json: {error: "Bird not found"}, status: :not_found 
+    end
+  end
+
   private
 
   def bird_params
